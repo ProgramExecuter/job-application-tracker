@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import jobPath from "./routes/Job.js";
 
@@ -14,6 +15,12 @@ dotenv.config();
 
 // Configure JSON forms
 app.use(express.json());
+
+// MongoDB Setup
+mongoose
+  .connect(process.env.MONGOURI)
+  .then((res) => console.log("DB Connected"))
+  .catch((err) => console.log(err));
 
 // URL Paths configure
 app.use("/", jobPath);
