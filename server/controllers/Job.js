@@ -2,8 +2,12 @@ import Job from "../models/Job.js";
 
 // Get all Jobs
 const getAllJobs = async (req, res) => {
+  const order = req.query.order || "asc";
+  const field = req.query.sort;
+
   // List of all jobs
-  const jobs = await Job.find();
+  // --> Using [] inside {}, so that we make value of 'field' as key, not field itself
+  const jobs = await Job.find().sort({ [field]: order });
 
   return res.status(200).json(jobs);
 };
